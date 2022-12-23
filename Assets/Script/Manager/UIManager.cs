@@ -103,6 +103,7 @@ public class UIManager : MonoBehaviour
     public GameObject DmageUI = null;
 
     public Button nextStage = null;
+    public Button prevStage = null;
 
     // timer
     float limitTime = 0f;
@@ -111,7 +112,7 @@ public class UIManager : MonoBehaviour
 
     public int Gold = 0;
     int WUpgradeGold = 10;
-    
+
     public int WeaponUpgradeNum = 0;
 
     public int enforceNum = 0;
@@ -120,6 +121,9 @@ public class UIManager : MonoBehaviour
     public float SetOffUpgradeUITime;
     public float UITime = 0f;
     bool OnMiddle = false;
+
+    public bool[] buyPotion = new bool[2] { false, false };
+
     // monster
     Monster monster;
     //
@@ -130,7 +134,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-
         monster = FindObjectOfType<Monster>();
         player = FindObjectOfType<Player>();
         soundController = FindObjectOfType<SoundEffectController>();
@@ -152,8 +155,14 @@ public class UIManager : MonoBehaviour
     public int totaldmg;
     private void Update()
     {
-        Debug.Log(ItemDamageUP);
+        // Debug.Log(ItemDamageUP);
         totaldmg = (player.WeaponDmg + enforceNum) * ItemDamageUP;
+
+        weponimg.sprite = player.WeaponImg;
+        weponNameText.text = "장비명 : " + player.WeaponName;
+        weponLevelText.text = "강화 단계 : " + enforceNum.ToString();
+        //weponPower.text = "공격력 : " + totaldmg.ToString();
+        weponPower.text = "무기공격력 : " + player.WeaponDmg + enforceNum + "\n그릴스포션 : " + ItemDamageUP;
 
         MiddleMove();
         UpdateUIData();
@@ -196,12 +205,11 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
         soundController.PlaySound("Click"); // 사운드 출력
 
+        monster.IsDead = false;
+
         // 타이머가 0이 되면 몬스터의 체력을 최대체력으로 리셋한다.
         monster.monsterCurHP = monster.monsterMaxHP;
     }
-
-
-
 
 
     //강화 클릭을 하면 웨폰업그레이드 값이 올라감
@@ -219,14 +227,14 @@ public class UIManager : MonoBehaviour
                 upgradeSuccess.gameObject.SetActive(true);
                 upgradeFail.gameObject.SetActive(false);
                 noGold.gameObject.SetActive(false);
-                
+
                 soundController.PlaySound("UpgradeSuccess"); // 사운드 출력
 
                 WUpgradeGold = (int)(WUpgradeGold * 1.1f);
-                //
+
                 upgradeCost.text = "강화 비용 : " + WUpgradeGold.ToString() + " G";
                 upgradePer.text = "성공 확률 : " + ((10 - enforceNum) * 10).ToString() + " %";
-                //
+
                 ++enforceNum;
                 if (enforceNum == 10)
                 {
@@ -244,10 +252,10 @@ public class UIManager : MonoBehaviour
                 noGold.gameObject.SetActive(false);
                 soundController.PlaySound("UpgradeFail"); // 사운드 출력
             }
-            weponimg.sprite = player.WeaponImg;
-            weponNameText.text = "장비명 : " + player.WeaponName;
-            weponLevelText.text = "강화 단계 : " + enforceNum.ToString();
-            weponPower.text = "공격력 : " + totaldmg.ToString();
+            // weponimg.sprite = player.WeaponImg;
+            // weponNameText.text = "장비명 : " + player.WeaponName;
+            // weponLevelText.text = "강화 단계 : " + enforceNum.ToString();
+            // weponPower.text = "공격력 : " + totaldmg.ToString();
         }
         else
         {
@@ -299,24 +307,25 @@ public class UIManager : MonoBehaviour
     public void OnBuyItemButton()
     {
         Debug.Log("물약 정상 구매");
+
         if (Gold < ItemCost) return; // 골드 부족 표시
+        if (buyPotion[ItemNum]) return;
 
         // 골드차감
         Gold -= ItemCost;
         ItemDamageUP *= 2;
 
-        PotionItem[ItemNum].interactable = false; // 구매한 버튼 비활성화 - 1번만 실행되고 다음 버튼 비활성화 안됨
+        PotionItem[ItemNum].interactable = false; // 구매한 버튼 비활성화
+        buyPotion[ItemNum] = true;
         soundController.PlaySound("Buy"); // 사운드 출력
 
     }
 
-    public void UIClear()
+    public void UIClear() // 
     {
         GameOverUI.gameObject.SetActive(false);
         GameClearUI.gameObject.SetActive(true);
     }
-
-
 
     void LiveMonster()
     {
@@ -350,14 +359,13 @@ public class UIManager : MonoBehaviour
         Instantiate<TextMeshProUGUI>(DMGText, Input.mousePosition, Quaternion.identity, Monster.transform);
 
 
-
-
         if (monster.monsterCurHP <= 0)
         {
             monster.IsDead = true;
             monster.monsterCurHP = 0;
             GameClearUI.gameObject.SetActive(true); // 게임 클리어 시, 게임 멈춤
             RestartButton.gameObject.SetActive(true);
+
             // UI & Monster Clear
             UIClear();
             DeadMonster();
@@ -365,7 +373,7 @@ public class UIManager : MonoBehaviour
             // 플레이어에게 GiveGold 만큼 전달
             Gold += monster.monsterGiveGold;
             nextStage.gameObject.SetActive(true);
-            if(monster.curMonsterNum>=4)
+            if (monster.curMonsterNum >= 4)
             {
                 nextStage.gameObject.SetActive(false);
             }

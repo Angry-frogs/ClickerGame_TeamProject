@@ -25,10 +25,9 @@ public class Monster : MonoBehaviour
     int prevMonsterNum;
     int nextMonsterNum;
 
-
-
     bool isNewMonster { get; set; }
-       
+    bool isDead = false;
+
 
     private void Awake()
     {
@@ -125,13 +124,18 @@ public class Monster : MonoBehaviour
         UIManager.INSTANCE.GameOverUI.gameObject.SetActive(false);
         UIManager.INSTANCE.GameClearUI.gameObject.SetActive(false);
         UIManager.INSTANCE.RestartButton.gameObject.SetActive(false);
+        UIManager.INSTANCE.prevStage.gameObject.SetActive(true);
+
+        if (curMonsterNum == 0) // 첫번째 몬스터일 때 이전 버튼 막기
+        {
+            UIManager.INSTANCE.prevStage.gameObject.SetActive(false);
+        }
 
         Debug.Log("BEST" + UIManager.INSTANCE.bestMonsterNum);
         Debug.Log("CUR" + curMonsterNum);
 
         if ( UIManager.INSTANCE.bestMonsterNum <= curMonsterNum )
-        {
-            
+        {            
             UIManager.INSTANCE.nextStage.gameObject.SetActive(false);
         }
 
@@ -139,6 +143,11 @@ public class Monster : MonoBehaviour
 
     public void PrevMonster()
     {
+        if (curMonsterNum <= 0)
+        {
+            curMonsterNum = 0;
+            return;
+        }
         curMonsterNum -= 1;
         isNewMonster = true;
         NewMonster(curMonsterNum);
@@ -154,6 +163,10 @@ public class Monster : MonoBehaviour
         UIManager.INSTANCE.RestartButton.gameObject.SetActive(false);
         UIManager.INSTANCE.nextStage.gameObject.SetActive(true);
 
+        if (curMonsterNum == 0)
+        {
+            UIManager.INSTANCE.prevStage.gameObject.SetActive(false);
+        }
     }
 
     void NewMonster(int num)

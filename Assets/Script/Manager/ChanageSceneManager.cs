@@ -10,10 +10,8 @@ public class ChanageSceneManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
     public void ONRESTARTGAME()
-    {
-        Debug.Log("ºÒ·¯");
-        SceneManager.LoadScene("GameScene");
-       
+    {       
+        SceneManager.LoadScene("GameScene");       
     }
     public void EXIT() 
     { 

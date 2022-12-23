@@ -1492,7 +1492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &401648697
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3131,6 +3131,7 @@ MonoBehaviour:
   DMGText: {fileID: 4574147679925497171, guid: 038acd7e2711c5545bc8b76428c02f8f, type: 3}
   DmageUI: {fileID: 595371747}
   nextStage: {fileID: 1139848317}
+  prevStage: {fileID: 401648700}
   time: 30
   Gold: 0
   WeaponUpgradeNum: 0
@@ -3138,6 +3139,7 @@ MonoBehaviour:
   bestMonsterNum: 0
   SetOffUpgradeUITime: 0
   UITime: 0
+  buyPotion: 0000
   totaldmg: 0
 --- !u!1 &776332002
 GameObject:
@@ -4048,6 +4050,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bgm_AudioSource: {fileID: 1339953843}
   SE_AudioSource: {fileID: 519420034}
+  Bgm_Slider: {fileID: 0}
+  SE_Slider: {fileID: 0}
 --- !u!4 &913725233
 Transform:
   m_ObjectHideFlags: 0
