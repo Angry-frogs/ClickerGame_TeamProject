@@ -471,7 +471,7 @@ public class UIManager : MonoBehaviour
         Monster.interactable = true;
         monster.IsDead = false;
         monster.monsterCurHP = monster.monsterMaxHP;
-        time = 30;
+        time = monster.monsterLimitTime;
         GameOverUI.gameObject.SetActive(false);
         GameClearUI.gameObject.SetActive(false);
         RestartButton.gameObject.SetActive(false);

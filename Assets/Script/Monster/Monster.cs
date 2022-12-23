@@ -46,7 +46,6 @@ public class Monster : MonoBehaviour
 
         monsterImage.sprite = monsterData[curMonsterNum].Image;
 
-        autoDamage = 1;
 
         IsDead = false;
 
@@ -74,6 +73,7 @@ public class Monster : MonoBehaviour
         if (monsterCurHP <= 0)
         {
             IsDead = true;
+            monsterCurHP = 0;  
             UIManager.INSTANCE.nextStage.gameObject.SetActive(true);
             // UI & Monster Clear
             UIManager.INSTANCE.UIClear();
@@ -93,8 +93,9 @@ public class Monster : MonoBehaviour
         if (time >= 1f)
         {
             rectTransform.localScale = new Vector2(1.0f, 1.0f); // 몬스터 원래 사이즈 
+            autoDamage = UIManager.INSTANCE.totaldmg;
             monsterCurHP -= autoDamage;
-            UIManager.INSTANCE.AutoDamageText.text = autoDamage.ToString();
+            //UIManager.INSTANCE.AutoDamageText.text = autoDamage.ToString();
             time = 0f;
         }
     }
