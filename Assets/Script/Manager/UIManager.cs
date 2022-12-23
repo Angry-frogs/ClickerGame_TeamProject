@@ -222,22 +222,9 @@ public class UIManager : MonoBehaviour
         TimerText.text = timer.ToString();
         if (timer <= limitTime)
         {
-            DeadPlayer();
-            Invoke("RESTART", 1f);
+            DeadPlayer();            
         }
     }
-
-    private void RESTART()
-    {
-        Time.timeScale = 1;
-        soundController.PlaySound("Click"); // 사운드 출력
-
-        monster.IsDead = false;
-
-        // 타이머가 0이 되면 몬스터의 체력을 최대체력으로 리셋한다.
-        monster.monsterCurHP = monster.monsterMaxHP;
-    }
-
 
     //강화 클릭을 하면 웨폰업그레이드 값이 올라감
     public void OnClickWeaponUpgrade()
@@ -468,6 +455,8 @@ public class UIManager : MonoBehaviour
     // 재시작 버튼
     public void OnClickRestart()
     {
+        Time.timeScale = 1f;
+        soundController.PlaySound("Click"); // 사운드 출력
         Monster.interactable = true;
         monster.IsDead = false;
         monster.monsterCurHP = monster.monsterMaxHP;
