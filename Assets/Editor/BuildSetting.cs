@@ -10,10 +10,10 @@ public class BuildSetting
     [MenuItem("MyTools/Build")]
     public static void MyBuild()
     {
-        string desktop = "C:/MetaTrend_1";
-        string buildPath = desktop + "/MiniGame_1/";
-        string[] scene = { "Assets/Scenes/HomeScene.unity",
-        "Assets/Scenes/InGameScene.unity"};
+        string desktop = "C:/MetaTrend_2";
+        string buildPath = desktop + "/MiniGame_2/";
+        string[] scene = { "Assets/Scenes/GameScene.unity",
+        "Assets/Scenes/GameScene.unity"};
         string folderName = "";
         string folderDate = "";
 

@@ -22,12 +22,9 @@ public class Monster : MonoBehaviour
     int autoDamage { get; set; }
 
     public int curMonsterNum;
-    int prevMonsterNum;
-    int nextMonsterNum;
 
     bool isNewMonster { get; set; }
-    bool isDead = false;
-
+    
 
     private void Awake()
     {

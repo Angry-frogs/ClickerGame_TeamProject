@@ -24,6 +24,12 @@ public class Player : MonoBehaviour
 
     public void WeponLvUP()
     {
+        if (UIManager.INSTANCE.WeaponUpgradeNum > 4)
+        {
+            UIManager.INSTANCE.WeaponUpgradeNum = 4;
+            return;
+        }
+
         WeaponImg = weapons[UIManager.INSTANCE.WeaponUpgradeNum].WeaponImg;
         WeaponName = weapons[UIManager.INSTANCE.WeaponUpgradeNum].WeaponName;
         WeaponLevel = weapons[UIManager.INSTANCE.WeaponUpgradeNum].WeaponLevel;

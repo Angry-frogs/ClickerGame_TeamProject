@@ -63,6 +63,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI weponNameText = null;
     public TextMeshProUGUI weponLevelText = null;
     public TextMeshProUGUI weponPower = null;
+    public TextMeshProUGUI ItemDamageUPText = null;
+    public TextMeshProUGUI totalDamage = null;
 
     public Image upgradeSuccess = null;
     public Image upgradeFail = null;
@@ -120,6 +122,7 @@ public class UIManager : MonoBehaviour
 
     public float SetOffUpgradeUITime;
     public float UITime = 0f;
+    public int totaldmg;
     bool OnMiddle = false;
 
     public bool[] buyPotion = new bool[2] { false, false };
@@ -156,17 +159,17 @@ public class UIManager : MonoBehaviour
         LiveMonster();
     }
 
-    public int totaldmg;
     private void Update()
     {
         // Debug.Log(ItemDamageUP);
         totaldmg = (player.WeaponDmg + enforceNum) * ItemDamageUP;
-
         weponimg.sprite = player.WeaponImg;
         weponNameText.text = "장비명 : " + player.WeaponName;
         weponLevelText.text = "강화 단계 : " + enforceNum.ToString();
-        //weponPower.text = "공격력 : " + totaldmg.ToString();
-        weponPower.text = "무기공격력 : " + player.WeaponDmg + enforceNum + "\n그릴스포션 : " + ItemDamageUP;
+        weponPower.text = "무기 공격력 : " + (player.WeaponDmg + enforceNum);
+        ItemDamageUPText.text = "물약 배율 : X" + ItemDamageUP;
+        totalDamage.text = "총 공격력 : " + totaldmg;
+        
 
         MiddleMove();
         UpdateUIData();
@@ -239,7 +242,12 @@ public class UIManager : MonoBehaviour
     //강화 클릭을 하면 웨폰업그레이드 값이 올라감
     public void OnClickWeaponUpgrade()
     {
-
+        if (WeaponUpgradeNum > 4 && enforceNum >= 10)
+        {
+            WeaponUpgradeNum = 4;
+            enforceNum = 10;
+            return;
+        }
         if (Gold >= WUpgradeGold)
         {
             Gold -= WUpgradeGold;
@@ -260,12 +268,16 @@ public class UIManager : MonoBehaviour
                 upgradePer.text = "성공 확률 : " + ((10 - enforceNum) * 10).ToString() + " %";
 
                 ++enforceNum;
-                if (enforceNum == 10)
+                if (enforceNum == 10 && WeaponUpgradeNum != 4)
                 {
                     ++WeaponUpgradeNum;
 
                     player.WeponLvUP();
                     enforceNum = 0;
+                }
+                else if (enforceNum == 10 && WeaponUpgradeNum == 4)
+                {
+                    Debug.Log("더이상 강화할수 없습니다.");
                 }
             }
             else
