@@ -4322,8 +4322,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bgm_AudioSource: {fileID: 1339953843}
   SE_AudioSource: {fileID: 519420034}
-  Bgm_Slider: {fileID: 0}
-  SE_Slider: {fileID: 0}
+  Bgm_Slider: {fileID: 236197687}
+  SE_Slider: {fileID: 1037865861}
 --- !u!4 &913725233
 Transform:
   m_ObjectHideFlags: 0
@@ -4635,7 +4635,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1457717843038957989, guid: 83aad4d71131edb4fa867e7ef5636f0f, type: 3}
         m_TargetAssemblyTypeName: ChanageSceneManager, Assembly-CSharp
         m_MethodName: EXIT
         m_Mode: 1
