@@ -130,7 +130,7 @@ public class UIManager : MonoBehaviour
     Player player;
 
     SoundEffectController soundController;
-
+    bool IsESC { get; set; }
 
     private void Awake()
     {
@@ -138,6 +138,7 @@ public class UIManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         soundController = FindObjectOfType<SoundEffectController>();
         Gold = 1000;
+        IsESC = false;
     }
     private void Start()
     {
@@ -168,6 +169,25 @@ public class UIManager : MonoBehaviour
         UpdateUIData();
         UpdateTimer();
         OnupgradeUI();
+
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            ClickESC();
+        }
+    }
+
+    void ClickESC() 
+    {
+        if (IsESC == false)
+        {
+            IsESC = true;
+            OnClickSettinButton();
+        }
+        else if (IsESC == true)
+        {
+            IsESC = false;
+            OffClickSettinButton();
+        }
     }
 
     void UpdateUIData()
