@@ -10,28 +10,37 @@ public class BuildSetting
     [MenuItem("MyTools/Build")]
     public static void MyBuild()
     {
-        string desktop = "C:/MetaTrend_2";
-        string buildPath = desktop + "/MiniGame_2/";
-        string[] scene = { "Assets/Scenes/GameScene.unity" };
-        string folder = "";
+        string desktop = "C:/MetaTrend_1";
+        string buildPath = desktop + "/MiniGame_1/";
+        string[] scene = { "Assets/Scenes/HomeScene.unity",
+        "Assets/Scenes/InGameScene.unity"};
+        string folderName = "";
+        string folderDate = "";
 
         FileInfo buildInfo = new FileInfo(buildPath);
 
-        if(buildInfo.Exists == false)
+        if (buildInfo.Exists == false)
         {
-            Directory.CreateDirectory(buildPath);
+            Directory.CreateDirectory(buildInfo.FullName);
         }
 
-        folder = buildPath + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + "/";
+        folderDate = buildPath + DateTime.Now.ToString("yyyy_MM_dd") + "/";
 
-        FileInfo folderInfo = new FileInfo(folder);
-
-        if (folderInfo.Exists == false) 
+        FileInfo info = new FileInfo(folderDate);
+        if (info.Exists == false)
         {
-            Directory.CreateDirectory(folder);
+            Directory.CreateDirectory(folderDate);
+        }
+
+        folderName = folderDate + DateTime.Now.ToString("HH_mm_ss") + "/";
+        FileInfo folder = new FileInfo(folderName);
+
+        if (folder.Exists == false)
+        {
+            Directory.CreateDirectory(folder.FullName);
         }
 
 
-        BuildPipeline.BuildPlayer(scene, folder + "build.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
+        BuildPipeline.BuildPlayer(scene, folderName + "build.exe", BuildTarget.StandaloneWindows64, BuildOptions.None);
     }
 }

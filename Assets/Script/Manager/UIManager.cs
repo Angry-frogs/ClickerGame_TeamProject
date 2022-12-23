@@ -147,9 +147,12 @@ public class UIManager : MonoBehaviour
         MonsterName.text = monster.monsterName.ToString();
         MonsterStage.text = monster.monsterStage.ToString();
 
+        // 타이머 텍스트
         TimerText.text = monster.monsterLimitTime.ToString();
+        // 플레이어 골드 텍스트
         PlayerGold.text = Gold.ToString();
 
+        // 몬스터 살아있음
         LiveMonster();
     }
 
@@ -176,6 +179,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // ESC 키 누르면 설정창 띄움
     void ClickESC() 
     {
         if (IsESC == false)
@@ -299,6 +303,7 @@ public class UIManager : MonoBehaviour
 
     }
 
+    // 설정 버튼 눌렀을 때
     public void OnClickSettinButton()
     {
         Time.timeScale = 0;
@@ -312,6 +317,7 @@ public class UIManager : MonoBehaviour
         soundController.PlaySound("Click");
     }
 
+    // 대장간 버튼 눌렀을 때
     public void OnClickShopButton()
     {
         Time.timeScale = 0;
@@ -324,6 +330,8 @@ public class UIManager : MonoBehaviour
         ShopWindow.gameObject.SetActive(false);
         soundController.PlaySound("Click");
     }
+
+    // 아이템 구매 버튼 눌렀을 때
     public void OnBuyItemButton()
     {
         Debug.Log("물약 정상 구매");
@@ -341,23 +349,28 @@ public class UIManager : MonoBehaviour
 
     }
 
+    // 안쓰는 UI 닦기
     public void UIClear() // 
     {
         GameOverUI.gameObject.SetActive(false);
         GameClearUI.gameObject.SetActive(true);
     }
 
-    void LiveMonster()
+    // 몬스터가 살아있을 때만 몬스터 공격 가능 - 버튼 활성화
+    void LiveMonster() 
     {
         Monster.interactable = true;
         Time.timeScale = 1;
     }
+
+    // 몬스터 죽으면 몬스터 공격 불가 - 버튼 비활성화
     public void DeadMonster()
     {
         Monster.interactable = false;
         soundController.PlaySound("MonsterDie"); // 사운드 출력
     }
 
+    // 플레이어 게임오버
     void DeadPlayer()
     {
         Time.timeScale = 0;
@@ -365,6 +378,7 @@ public class UIManager : MonoBehaviour
 
     }
 
+    // 몬스터 타격
     public void HitToMonster()
     {
         monster.rectTransform.localScale = new Vector2(0.9f, 0.9f);
@@ -375,10 +389,11 @@ public class UIManager : MonoBehaviour
 
         monster.monsterCurHP -= totaldmg;
 
+        // 타격 이펙트 및 텍스트 출력
         Instantiate<Image>(att_eff, Input.mousePosition, Quaternion.identity, Monster.transform);
         Instantiate<TextMeshProUGUI>(DMGText, Input.mousePosition, Quaternion.identity, Monster.transform);
 
-
+        // 몬스터가 죽었을 때 처리
         if (monster.monsterCurHP <= 0)
         {
             monster.IsDead = true;
@@ -406,6 +421,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // 왼쪽 중간 무기 UI 슬라이더
     public void OnClickMiddle()
     {
         if (OnMiddle)
@@ -437,10 +453,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
+    // 재시작 버튼
     public void OnClickRestart()
     {
-
         Monster.interactable = true;
         monster.IsDead = false;
         monster.monsterCurHP = monster.monsterMaxHP;
@@ -448,10 +463,5 @@ public class UIManager : MonoBehaviour
         GameOverUI.gameObject.SetActive(false);
         GameClearUI.gameObject.SetActive(false);
         RestartButton.gameObject.SetActive(false);
-
-
     }
-
-
-
 }
